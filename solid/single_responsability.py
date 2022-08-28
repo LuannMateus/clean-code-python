@@ -1,0 +1,45 @@
+class Order:
+    items: list[str] = []
+    quantities: list[int] = []
+    prices: list[float] = []
+    status = "open"
+
+    def add_items(self, name, quantity, price):
+        self.items.append(name)
+        self.quantities.append(quantity)
+        self.prices.append(price)
+
+    def total_price(self):
+        total = 0
+
+        for i in range(len(self.prices)):
+            total += self.quantities[i] * self.prices[i]
+
+        return total
+
+
+class PaymentProcessor:
+
+    def pay_debit(self, order, security_code):
+        print('Processing debit payment type...')
+        print(f'Verifying security code: {security_code}')
+        order.status = "paid"
+
+    def pay_credit(self, order, security_code):
+        print('Processing credit payment type...')
+        print(f'Verifying security code: {security_code}')
+        order.status = "paid"
+
+
+order = Order()
+
+order.add_items("Keyboard", 1, 50)
+order.add_items("SSD", 1, 150)
+order.add_items("USB cable", 2, 5)
+
+print(order.total_price())
+
+processor = PaymentProcessor()
+
+
+processor.pay_debit(order, "0372846")
